@@ -33,7 +33,32 @@ void MyHelper::bubble_sort(int* p, int len)
 }
 
 
-void MyHelper::insert_sort(int* p, int len)
+void MyHelper::insert_sort_with_binary_search(int* p, int len)
+{
+    int t = 0;
+    for (int i = 1; i < len; i++)
+    {
+        if (p[i] < p[i - 1]) //升序
+        {
+            t = p[i];
+            int low = 0, height = i-1, mid;
+            while(low < height)
+            {
+                mid = (height+low)/2;
+                if (p[mid] < t )
+                    low = mid+1;
+                else
+                    height = mid -1;
+            }
+            int j;
+            for(j =  i-1; j >= low;j--)
+                p[j+1] = p [j];
+            p[j+1] = t;
+        }
+    }
+}
+
+void MyHelper::insert_sort_normal(int* p, int len)
 {
     int t = 0;
     for (int i = 1; i < len; i++)
@@ -45,6 +70,25 @@ void MyHelper::insert_sort(int* p, int len)
             for (j = i - 1; p[j] > t && j >= 0; j--)
                 p[j + 1] = p[j]; //p[j]空出
             p[j + 1] = t;  //p[j]的上一数已空出
+        }
+    }
+}
+
+void MyHelper::insert_sort_slow(int* p, int len)
+{
+    int t = 0;
+    for (int i = 1; i < len; i++)
+    {
+        if (p[i] < p[i - 1]) //升序
+        {
+            t = p[i];
+            int j;
+            for (j = i - 1; p[j] > t && j >= 0; j--)
+            {
+                int tmp = p[j+1];
+                p[j+1] = p[j];
+                p[j] = tmp;
+            }
         }
     }
 }
