@@ -41,19 +41,19 @@ void MyHelper::insert_sort_with_binary_search(int* p, int len)
         if (p[i] < p[i - 1]) //升序
         {
             t = p[i];
-            int low = 0, height = i-1, mid;
-            while(low < height)
+            int low = 0, height = i - 1, mid;
+            while (low < height)
             {
-                mid = (height+low)/2;
-                if (p[mid] < t )
-                    low = mid+1;
+                mid = (height + low) / 2;
+                if (p[mid] < t)
+                    low = mid + 1;
                 else
-                    height = mid -1;
+                    height = mid - 1;
             }
             int j;
-            for(j =  i-1; j >= low;j--)
-                p[j+1] = p [j];
-            p[j+1] = t;
+            for (j =  i - 1; j >= low; j--)
+                p[j + 1] = p [j];
+            p[j + 1] = t;
         }
     }
 }
@@ -85,15 +85,34 @@ void MyHelper::insert_sort_slow(int* p, int len)
             int j;
             for (j = i - 1; p[j] > t && j >= 0; j--)
             {
-                int tmp = p[j+1];
-                p[j+1] = p[j];
+                int tmp = p[j + 1];
+                p[j + 1] = p[j];
                 p[j] = tmp;
             }
         }
     }
 }
 
-void MyHelper::shell_sort(int* p, int len)
+void MyHelper::select_sort(int* p, const int len)
+{
+    for (int i = 0; i < len - 1; i++)
+    {
+        int min_ind = i;
+        for (int j = i + 1; j < len; j++)
+        {
+            if (p[j] < p[min_ind])
+                min_ind = j;
+        }
+        if (min_ind != i)
+        {
+            int tmp = p[i];
+            p[i] = p[min_ind];
+            p[min_ind] = tmp;
+        }
+    }
+}
+
+void MyHelper::shell_sort(int* p, const int len)
 {
     int d, i, j, k, tgt;
     for (d = len / 2; d != 0; d = d / 2)//增量
@@ -143,6 +162,54 @@ int MyHelper::quick_partition(int* p, int head, int tail)
     return i;
 }
 
-void MyHelper::heap_sort(int* p, int len)
+void MyHelper::adjust_from_up_to_down(int* p, const int len, const int idn_root)
 {
+    int i = idn_root;
+    for (int j = i * 2 + 1; j < len;
+         j = j * 2 + 1)//自上而下调整子树，形成小根堆
+    {
+        if (j+1 < len && p[j] > p[j + 1]) //左子节点 > 右子节点
+        {
+            j++;
+            if (p[(j - 2) / 2] < p[j]) //父节点 < 子节点
+                break;
+            else     //父节点 > 子节点，则交换父子节点
+            {
+                int tmp = p[(j - 2) / 2];
+                p[(j - 2) / 2] = p[j];
+                p[j] = tmp;
+            }
+        }
+        else //左子节点 < 右子节点
+        {
+            if (p[j / 2] < p[j]) //父节点 < 子节点
+                break;
+            else     //父节点 > 子节点，则交换父子节点
+            {
+                int tmp = p[j / 2];
+                p[j / 2] = p[j];
+                p[j] = tmp;
+            }
+        }
+    }
+}
+
+void MyHelper::build_min_heap(int* p, const int len)
+{
+    for (int i = len / 2; i >= 0; i--)//自下而上遍历所有子树的根节点
+    {
+        adjust_from_up_to_down(p, len, i);//调整第i棵子树，形成小根堆
+    }
+}
+
+void MyHelper::heap_sort(int* p, const int len)
+{
+    build_min_heap(p, len); //最小值在root
+    for (int i = len - 1;  i > 0; i--)
+    {
+        int tmp = p[i];
+        p[i] = p[0];
+        p[0] = tmp;
+        adjust_from_up_to_down(p, i, 0);
+    }
 }
