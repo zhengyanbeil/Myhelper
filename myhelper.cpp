@@ -24,9 +24,7 @@ void MyHelper::bubble_sort(int* p, int len)
         {
             if (p[j] > p[j + 1]) //大数后移
             {
-                int tmp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = tmp;
+                swap(p + j, p + (j + 1));
             }
         }
     }
@@ -85,9 +83,7 @@ void MyHelper::insert_sort_slow(int* p, int len)
             int j;
             for (j = i - 1; p[j] > t && j >= 0; j--)
             {
-                int tmp = p[j + 1];
-                p[j + 1] = p[j];
-                p[j] = tmp;
+                swap(p + j, p + (j + 1));
             }
         }
     }
@@ -105,9 +101,7 @@ void MyHelper::select_sort(int* p, const int len)
         }
         if (min_ind != i)
         {
-            int tmp = p[i];
-            p[i] = p[min_ind];
-            p[min_ind] = tmp;
+            swap(p + min_ind, p + i);
         }
     }
 }
@@ -168,48 +162,34 @@ void MyHelper::adjust_from_up_to_down(int* p, const int len, const int idn_root)
     for (int j = i * 2 + 1; j < len;
          j = j * 2 + 1)//自上而下调整子树，形成小根堆
     {
-        if (j+1 < len && p[j] > p[j + 1]) //左子节点 > 右子节点
-        {
+        if (j + 1 < len && p[j] > p[j + 1]) //左子节点 > 右子节点
             j++;
-            if (p[(j - 2) / 2] < p[j]) //父节点 < 子节点
-                break;
-            else     //父节点 > 子节点，则交换父子节点
-            {
-                int tmp = p[(j - 2) / 2];
-                p[(j - 2) / 2] = p[j];
-                p[j] = tmp;
-            }
-        }
-        else //左子节点 < 右子节点
-        {
-            if (p[j / 2] < p[j]) //父节点 < 子节点
-                break;
-            else     //父节点 > 子节点，则交换父子节点
-            {
-                int tmp = p[j / 2];
-                p[j / 2] = p[j];
-                p[j] = tmp;
-            }
-        }
-    }
-}
-
-void MyHelper::build_min_heap(int* p, const int len)
-{
-    for (int i = len / 2; i >= 0; i--)//自下而上遍历所有子树的根节点
-    {
-        adjust_from_up_to_down(p, len, i);//调整第i棵子树，形成小根堆
+        if (p[i] < p[j]) //父节点 < 子节点
+            break;
+        else     //父节点 > 子节点，则交换父子节点
+            swap(p + i, p + j);
+        i = j;  //切换至新新子树的根节点
     }
 }
 
 void MyHelper::heap_sort(int* p, const int len)
 {
-    build_min_heap(p, len); //最小值在root
+    //最小值在root
+    for (int i = len / 2; i >= 0; i--)//自下而上遍历所有子树的根节点
+    {
+        adjust_from_up_to_down(p, len, i);//调整第i棵子树，形成小根堆
+    }
     for (int i = len - 1;  i > 0; i--)
     {
-        int tmp = p[i];
-        p[i] = p[0];
-        p[0] = tmp;
+        swap(p, p + i);
         adjust_from_up_to_down(p, i, 0);
     }
+}
+
+void MyHelper::swap(int* p, int* q)
+{
+    int tmp;
+    tmp = *p;
+    *p = *q;
+    *q = tmp;
 }
