@@ -193,3 +193,43 @@ void MyHelper::swap(int* p, int* q)
     *p = *q;
     *q = tmp;
 }
+
+int MyHelper::substring(const char *s, const char *t, const int pos)
+{
+    int i = pos, j = 0;
+    int len_s = strlen(s);
+    int len_t = strlen(t);
+    while (i < len_s && j < len_t)
+    {
+        if (s[i] == t[j])
+        {
+            i++; j++;
+        }
+        else
+        {
+            i = i - j + 1;
+            j = 0;
+        }
+    }
+    if (j != len_t) //若子串未匹配完毕，说明检索失败
+        return -1;
+    else
+        return i - j;
+}
+
+int MyHelper::substring_count(const char *s, const char *t, const int pos)
+{
+    int sum = 0, i = pos, loc=0;
+    do{
+        loc = substring(s,t,i);
+        if(-1 != loc)
+        {
+            sum++;
+            i = loc + strlen(t);
+        }
+        else{
+            break;
+        }
+    }while(1);
+    return sum;
+}

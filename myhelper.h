@@ -2,6 +2,7 @@
 #define MYHELPER_H
 
 #include <vector>
+#include <cstring>
 #include <time.h>
 
 using namespace std;
@@ -31,6 +32,10 @@ extern "C" {
 
             //其他
             static void swap(int* p, int* q);
+
+            //字符串查找
+            static int substring(const char *s, const char *t, const int pos);
+            static int substring_count(const char *s, const char *t, const int pos);
     };
 }
 #endif // MYHELPER_H
