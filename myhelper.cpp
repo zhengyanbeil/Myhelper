@@ -233,3 +233,56 @@ int MyHelper::substring_count(const char *s, const char *t, const int pos)
     }while(1);
     return sum;
 }
+
+List* MyHelper::createList(int len)
+{
+    List* p = NULL, *q = NULL, *head = NULL;
+    while (len)
+    {
+        p = (List*)malloc(sizeof(List));
+        if (NULL == p)
+        {
+            cout << "no memory...";
+            break;
+        }
+        p->data = len;
+        p->next = NULL;
+        if (NULL == head)
+            head = p;
+        else
+            q->next = p;
+        q = p;
+        p = p->next;
+        len--;
+    }
+    return head;
+}
+
+void MyHelper::travelList(List* head)
+{
+    List* p = head;
+    while (p != NULL)
+    {
+        cout << p->data << endl;
+        p = p->next;
+    }
+}
+
+List* MyHelper::reverseList(List* head)
+{
+    List* pre = head;
+    List* cur = head;
+    List* nex = head->next;
+    cur->next = NULL;
+    cur = nex;
+    nex = nex->next;
+    while (cur)
+    {
+        cur->next = pre;
+        pre = cur;
+        cur = nex;
+        if (nex != NULL)
+            nex = nex->next;
+    }
+    head = pre;
+}

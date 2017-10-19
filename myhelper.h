@@ -4,8 +4,16 @@
 #include <vector>
 #include <cstring>
 #include <time.h>
+#include <cstdlib>
+#include <iostream>
 
 using namespace std;
+
+typedef struct List
+{
+    int data;
+    struct List* next;
+} List;
 
 extern "C" {
     class MyHelper
@@ -36,6 +44,11 @@ extern "C" {
             //字符串查找
             static int substring(const char *s, const char *t, const int pos);
             static int substring_count(const char *s, const char *t, const int pos);
+
+            //链表操作
+            static List* createList(int len);
+            static void travelList(List* head);
+            static List* reverseList(List* head);
     };
 }
 #endif // MYHELPER_H
