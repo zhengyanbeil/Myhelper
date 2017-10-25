@@ -286,3 +286,15 @@ List* MyHelper::reverseList(List* head)
     }
     head = pre;
 }
+
+void MyHelper::prime_factorization(unsigned int n, vector<unsigned int> &vec_factor)
+{
+    unsigned int factor = 2;
+    if(n == 1 || n == 2)
+        return;
+    while(n % factor != 0)
+        ++factor;
+    n = n/factor;
+    vec_factor.push_back(factor);
+    prime_factorization(n,vec_factor);
+}

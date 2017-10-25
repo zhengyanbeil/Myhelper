@@ -49,6 +49,10 @@ extern "C" {
             static List* createList(int len);
             static void travelList(List* head);
             static List* reverseList(List* head);
+
+            //数学计算
+            static void prime_factorization(unsigned int n, vector<unsigned int> &vec_factor);
+
     };
 }
 #endif // MYHELPER_H
