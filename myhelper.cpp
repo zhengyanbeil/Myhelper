@@ -1,6 +1,10 @@
 #include "myhelper.h"
 
-bool MyHelper::bin_apart(vector<int>& v, int tgt)
+//using namespace MyHelper_namespace;
+
+const char MyHelper::hex_letter_table[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+bool MyHelper::bin_apart(vector<int> &v, int tgt)
 {
     auto it_begin = v.cbegin();
     auto it_end = v.cend();
@@ -16,7 +20,7 @@ bool MyHelper::bin_apart(vector<int>& v, int tgt)
     return (tgt == *it_mid) ? true : false ;
 }
 
-void MyHelper::bubble_sort(int* p, int len)
+void MyHelper::bubble_sort(int *p, int len)
 {
     for (int i = 0; i < len ; i++)
     {
@@ -31,7 +35,7 @@ void MyHelper::bubble_sort(int* p, int len)
 }
 
 
-void MyHelper::insert_sort_with_binary_search(int* p, int len)
+void MyHelper::insert_sort_with_binary_search(int *p, int len)
 {
     int t = 0;
     for (int i = 1; i < len; i++)
@@ -56,7 +60,7 @@ void MyHelper::insert_sort_with_binary_search(int* p, int len)
     }
 }
 
-void MyHelper::insert_sort_normal(int* p, int len)
+void MyHelper::insert_sort_normal(int *p, int len)
 {
     int t = 0;
     for (int i = 1; i < len; i++)
@@ -72,7 +76,7 @@ void MyHelper::insert_sort_normal(int* p, int len)
     }
 }
 
-void MyHelper::insert_sort_slow(int* p, int len)
+void MyHelper::insert_sort_slow(int *p, int len)
 {
     int t = 0;
     for (int i = 1; i < len; i++)
@@ -89,7 +93,7 @@ void MyHelper::insert_sort_slow(int* p, int len)
     }
 }
 
-void MyHelper::select_sort(int* p, const int len)
+void MyHelper::select_sort(int *p, const int len)
 {
     for (int i = 0; i < len - 1; i++)
     {
@@ -106,7 +110,7 @@ void MyHelper::select_sort(int* p, const int len)
     }
 }
 
-void MyHelper::shell_sort(int* p, const int len)
+void MyHelper::shell_sort(int *p, const int len)
 {
     int d, i, j, k, tgt;
     for (d = len / 2; d != 0; d = d / 2)//增量
@@ -127,7 +131,7 @@ void MyHelper::shell_sort(int* p, const int len)
     }
 }
 
-void MyHelper::quick_sort(int* p, int head, int tail)
+void MyHelper::quick_sort(int *p, int head, int tail)
 {
     int k;
     if (head < tail)
@@ -138,7 +142,7 @@ void MyHelper::quick_sort(int* p, int head, int tail)
     }
 }
 
-int MyHelper::quick_partition(int* p, int head, int tail)
+int MyHelper::quick_partition(int *p, int head, int tail)
 {
     int tgt = p[head];
     int i = head;
@@ -156,11 +160,11 @@ int MyHelper::quick_partition(int* p, int head, int tail)
     return i;
 }
 
-void MyHelper::adjust_from_up_to_down(int* p, const int len, const int idn_root)
+void MyHelper::adjust_from_up_to_down(int *p, const int len, const int idn_root)
 {
     int i = idn_root;
     for (int j = i * 2 + 1; j < len;
-         j = j * 2 + 1)//自上而下调整子树，形成小根堆
+            j = j * 2 + 1)//自上而下调整子树，形成小根堆
     {
         if (j + 1 < len && p[j] > p[j + 1]) //左子节点 > 右子节点
             j++;
@@ -172,7 +176,7 @@ void MyHelper::adjust_from_up_to_down(int* p, const int len, const int idn_root)
     }
 }
 
-void MyHelper::heap_sort(int* p, const int len)
+void MyHelper::heap_sort(int *p, const int len)
 {
     //最小值在root
     for (int i = len / 2; i >= 0; i--)//自下而上遍历所有子树的根节点
@@ -186,7 +190,7 @@ void MyHelper::heap_sort(int* p, const int len)
     }
 }
 
-void MyHelper::swap(int* p, int* q)
+void MyHelper::swap(int *p, int *q)
 {
     int tmp;
     tmp = *p;
@@ -203,7 +207,8 @@ int MyHelper::substring(const char *s, const char *t, const int pos)
     {
         if (s[i] == t[j])
         {
-            i++; j++;
+            i++;
+            j++;
         }
         else
         {
@@ -219,27 +224,27 @@ int MyHelper::substring(const char *s, const char *t, const int pos)
 
 int MyHelper::substring_count(const char *s, const char *t, const int pos)
 {
-    int sum = 0, i = pos, loc=0;
-    do{
-        loc = substring(s,t,i);
-        if(-1 != loc)
+    int sum = 0, i = pos, loc = 0;
+    do {
+        loc = substring(s, t, i);
+        if (-1 != loc)
         {
             sum++;
             i = loc + strlen(t);
         }
-        else{
+        else {
             break;
         }
-    }while(1);
+    } while (1);
     return sum;
 }
 
-List* MyHelper::createList(int len)
+List *MyHelper::create_list(int len)
 {
-    List* p = NULL, *q = NULL, *head = NULL;
+    List *p = NULL, *q = NULL, *head = NULL;
     while (len)
     {
-        p = (List*)malloc(sizeof(List));
+        p = (List *)malloc(sizeof(List));
         if (NULL == p)
         {
             cout << "no memory...";
@@ -258,9 +263,9 @@ List* MyHelper::createList(int len)
     return head;
 }
 
-void MyHelper::travelList(List* head)
+void MyHelper::travel_list(List *head)
 {
-    List* p = head;
+    List *p = head;
     while (p != NULL)
     {
         cout << p->data << endl;
@@ -268,11 +273,11 @@ void MyHelper::travelList(List* head)
     }
 }
 
-List* MyHelper::reverseList(List* head)
+void MyHelper::reverse_list(List *head)
 {
-    List* pre = head;
-    List* cur = head;
-    List* nex = head->next;
+    List *pre = head;
+    List *cur = head;
+    List *nex = head->next;
     cur->next = NULL;
     cur = nex;
     nex = nex->next;
@@ -290,11 +295,43 @@ List* MyHelper::reverseList(List* head)
 void MyHelper::prime_factorization(unsigned int n, vector<unsigned int> &vec_factor)
 {
     unsigned int factor = 2;
-    if(n == 1 || n == 2)
+    if (n == 1 || n == 2)
         return;
-    while(n % factor != 0)
+    while (n % factor != 0)
         ++factor;
-    n = n/factor;
+    n = n / factor;
     vec_factor.push_back(factor);
-    prime_factorization(n,vec_factor);
+    prime_factorization(n, vec_factor);
+}
+
+int MyHelper::hexchar_to_int(char c)
+{
+    if (c >= '0' && c <= '9')
+        return (c - '0');
+    if (c >= 'A' && c <= 'F')
+        return (c - 'A' + 10);
+    if (c >= 'a' && c <= 'f')
+        return (c - 'a' + 10);
+    return -1;
+}
+
+void MyHelper::hexstring_to_bytes(char *hexstring, char *bytes, int hexlength)
+{
+    //printf("length is : %ld\n", sizeof(hexstring) / sizeof(char));
+    for (int i = 0 ; i < hexlength ; i += 2)
+    {
+        bytes[i / 2] = (char) ((hexchar_to_int(hexstring[i]) << 4) | hexchar_to_int(hexstring[i + 1]));
+    }
+}
+
+void MyHelper::bytes_to_hexstring(unsigned char *source_u_char_array, int arraylength, char *dest_hexstring, int hexstrlength)
+{
+    int b;
+    for (int i = 0, j = 0; i < arraylength && j < hexstrlength; i++, j++)
+    {
+        b = 0x0f & (source_u_char_array[i] >> 4);
+        dest_hexstring[j++] = hex_letter_table[b];
+        b = 0x0f & source_u_char_array[i];
+        dest_hexstring[j] = hex_letter_table[b];
+    }
 }
