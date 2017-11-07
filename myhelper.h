@@ -62,7 +62,9 @@ class MyHelper
 
     private:
         static const char hex_letter_table[16];
-        static int i;
+        MyHelper() = delete;
+        MyHelper(const MyHelper&) = delete;
+        MyHelper operator =(const MyHelper &) = delete;
 };
 //}
 
